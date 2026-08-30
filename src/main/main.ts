@@ -470,7 +470,15 @@ async function argRun(c: string[], first?: boolean) {
     } else if (argv.setting) {
         createSettingWindow();
     } else {
-        const path = argv._.find((i) => i.match(/(\.png)|(\.jpg)|(\.svg)$/i));
+        const appPath = app.getAppPath();
+        const path = argv._.find(
+            (i) =>
+                i !== appPath &&
+                existsSync(i) &&
+                i.match(
+                    /(\.png)|(\.jpe?g)|(\.svg)|(\.webp)|(\.bmp)|(\.gif)|(\.ico)|(\.tiff?)$/i,
+                ),
+        );
         if (path) showPhoto(path);
     }
 }
